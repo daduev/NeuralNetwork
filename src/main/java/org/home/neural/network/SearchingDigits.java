@@ -6,7 +6,7 @@ import org.apache.commons.lang3.RandomUtils;
 
 public class SearchingDigits {
 	
-	//Цифры (Обучающая выборка)
+	//Р¦РёС„СЂС‹ (РћР±СѓС‡Р°СЋС‰Р°СЏ РІС‹Р±РѕСЂРєР°)
 	int[] num0 = {1,1,1,1,0,1,1,0,1,1,0,1,1,1,1};
 	int[] num1 = {0,0,1,0,0,1,0,0,1,0,0,1,0,0,1};
 	int[] num2 = {1,1,1,0,0,1,1,1,1,1,0,0,1,1,1};
@@ -18,7 +18,7 @@ public class SearchingDigits {
 	int[] num8 = {1,1,1,1,0,1,1,1,1,1,0,1,1,1,1};
 	int[] num9 = {1,1,1,1,0,1,1,1,1,0,0,1,1,1,1};
 	
-	//Виды цифры 5 (Тестовая выборка)
+	//Р’РёРґС‹ С†РёС„СЂС‹ 5 (РўРµСЃС‚РѕРІР°СЏ РІС‹Р±РѕСЂРєР°)
 	int[] num51 = {1,1,1,1,0,0,1,1,1,0,0,0,1,1,1};
 	int[] num52 = {1,1,1,1,0,0,0,1,0,0,0,1,1,1,1};
 	int[] num53 = {1,1,1,1,0,0,0,1,1,0,0,1,1,1,1};
@@ -26,15 +26,14 @@ public class SearchingDigits {
 	int[] num55 = {1,1,0,1,0,0,1,1,1,0,0,1,0,1,1};
 	int[] num56 = {1,1,1,1,0,0,1,0,1,0,0,1,1,1,1};
 	
-	//Список всех вышеуказанных цифр
+	//РЎРїРёСЃРѕРє РІСЃРµС… РІС‹С€РµСѓРєР°Р·Р°РЅРЅС‹С… С†РёС„СЂ
 	int[][] nums = {num0, num1, num2, num3, num4, num5, num6, num7, num8, num9};
 	
-	//Инициализация весов сети
+	//РРЅРёС†РёР°Р»РёР·Р°С†РёСЏ РІРµСЃРѕРІ СЃРµС‚Рё
 	//int[] weights = IntStream.range(0, 15).toArray();
-	
 	int[] weights= {-7, -4, -6, -1, 4, -8, 0, 4, 0, -7, 10, 4, 8, 9, 6};
 	
-	//Порог функции активации
+	//РџРѕСЂРѕРі С„СѓРЅРєС†РёРё Р°РєС‚РёРІР°С†РёРё
 	int bias = 7;
 	
 	public SearchingDigits() {}
@@ -45,56 +44,56 @@ public class SearchingDigits {
 		searchingDigits.print();
 	}
 	
-	//Является ли данное число 5
+	//РЇРІР»СЏРµС‚СЃСЏ Р»Рё РґР°РЅРЅРѕРµ С‡РёСЃР»Рѕ 5
 	public boolean proceed(int[] number) {
-		//Рассчитываем взвешенную сумму
+		//Р Р°СЃСЃС‡РёС‚С‹РІР°РµРј РІР·РІРµС€РµРЅРЅСѓСЋ СЃСѓРјРјСѓ
 		int net = 0;
 		
 		for(int i=0; i<15; i++) {
 			net += number[i]*weights[i];
 		}
 		
-		//Превышен ли порог? (Да - сеть думает, что это 5. Нет - сеть думает, что это другая цифра)
+		//РџСЂРµРІС‹С€РµРЅ Р»Рё РїРѕСЂРѕРі? (Р”Р° - СЃРµС‚СЊ РґСѓРјР°РµС‚, С‡С‚Рѕ СЌС‚Рѕ 5. РќРµС‚ - СЃРµС‚СЊ РґСѓРјР°РµС‚, С‡С‚Рѕ СЌС‚Рѕ РґСЂСѓРіР°СЏ С†РёС„СЂР°)
 		return net >= bias;
 	}
 	
-	//Уменьшение значений весов, если сеть ошиблась и выдала 1
+	//РЈРјРµРЅСЊС€РµРЅРёРµ Р·РЅР°С‡РµРЅРёР№ РІРµСЃРѕРІ, РµСЃР»Рё СЃРµС‚СЊ РѕС€РёР±Р»Р°СЃСЊ Рё РІС‹РґР°Р»Р° 1
 	public void decrease(int[] number) {
 		for(int i=0; i<15; i++) {
-			//Возбужденный ли вход
+			//Р’РѕР·Р±СѓР¶РґРµРЅРЅС‹Р№ Р»Рё РІС…РѕРґ
 	        if (number[i] == 1) {
-	            //Уменьшаем связанный с ним вес на единицу
+	        	//РЈРјРµРЅСЊС€Р°РµРј СЃРІСЏР·Р°РЅРЅС‹Р№ СЃ РЅРёРј РІРµСЃ РЅР° РµРґРёРЅРёС†Сѓ
 	            weights[i] -= 1;	        	
 	        }
 		}
 	}
 	
-	//Увеличение значений весов, если сеть ошиблась и выдала 0
+	//РЈРІРµР»РёС‡РµРЅРёРµ Р·РЅР°С‡РµРЅРёР№ РІРµСЃРѕРІ, РµСЃР»Рё СЃРµС‚СЊ РѕС€РёР±Р»Р°СЃСЊ Рё РІС‹РґР°Р»Р° 0
 	public void increase(int[] number) {
 		for(int i=0; i<15; i++) {
-			//Возбужденный ли вход
+			//Р’РѕР·Р±СѓР¶РґРµРЅРЅС‹Р№ Р»Рё РІС…РѕРґ
 	        if (number[i] == 1) {
-	            //Уменьшаем связанный с ним вес на единицу
+	        	//РЈРјРµРЅСЊС€Р°РµРј СЃРІСЏР·Р°РЅРЅС‹Р№ СЃ РЅРёРј РІРµСЃ РЅР° РµРґРёРЅРёС†Сѓ
 	            weights[i] += 1;	        	
 	        }
 		}
 	}
 	
-	//Тренировка сети
+	//РўСЂРµРЅРёСЂРѕРІРєР° СЃРµС‚Рё
 	public void training() {
 		for(int i=0; i<100000; i++) {
-			//Генерируем случайное число от 0 до 9
+			//Р“РµРЅРµСЂРёСЂСѓРµРј СЃР»СѓС‡Р°Р№РЅРѕРµ С‡РёСЃР»Рѕ РѕС‚ 0 РґРѕ 9
 			int option = RandomUtils.nextInt(0, 10);
 			
-			//Если получилось НЕ число 5
+			//Р•СЃР»Рё РїРѕР»СѓС‡РёР»РѕСЃСЊ РќР• С‡РёСЃР»Рѕ 5
 			if (option != 5) {
-				//Если сеть выдала True/Да/1, то наказываем ее
+				//Р•СЃР»Рё СЃРµС‚СЊ РІС‹РґР°Р»Р° True/Р”Р°/1, С‚Рѕ РЅР°РєР°Р·С‹РІР°РµРј РµРµ
 				if(proceed(nums[option])) {
 					decrease(nums[option]);
 				}
-			//Если получилось число 5	
+				//Р•СЃР»Рё РїРѕР»СѓС‡РёР»РѕСЃСЊ С‡РёСЃР»Рѕ 5	
 			} else {
-				//Если сеть выдала False/Нет/0, то показываем, что эта цифра - то, что нам нужно
+				//Р•СЃР»Рё СЃРµС‚СЊ РІС‹РґР°Р»Р° False/РќРµС‚/0, С‚Рѕ РїРѕРєР°Р·С‹РІР°РµРј, С‡С‚Рѕ СЌС‚Р° С†РёС„СЂР° - С‚Рѕ, С‡С‚Рѕ РЅР°Рј РЅСѓР¶РЅРѕ
 				if(!proceed(num5)) {
 					increase(num5);
 				}
@@ -105,28 +104,28 @@ public class SearchingDigits {
 	}
 	
 	public void print() {
-		//Вывод значений весов
+		//Р’С‹РІРѕРґ Р·РЅР°С‡РµРЅРёР№ РІРµСЃРѕРІ
 		System.out.println(Arrays.toString(weights));
 		 
-		//Прогон по обучающей выборке
-		System.out.println("0 это 5? " + proceed(num0));
-		System.out.println("1 это 5? " + proceed(num1));
-		System.out.println("2 это 5? " + proceed(num2));
-		System.out.println("3 это 5? " + proceed(num3));
-		System.out.println("4 это 5? " + proceed(num4));
-		System.out.println("6 это 5? " + proceed(num6));
-		System.out.println("7 это 5? " + proceed(num7));
-		System.out.println("8 это 5? " + proceed(num8));
-		System.out.println("9 это 5? " + proceed(num9));
+		//РџСЂРѕРіРѕРЅ РїРѕ РѕР±СѓС‡Р°СЋС‰РµР№ РІС‹Р±РѕСЂРєРµ
+		System.out.println("0 ГЅГІГ® 5? " + proceed(num0));
+		System.out.println("1 ГЅГІГ® 5? " + proceed(num1));
+		System.out.println("2 ГЅГІГ® 5? " + proceed(num2));
+		System.out.println("3 ГЅГІГ® 5? " + proceed(num3));
+		System.out.println("4 ГЅГІГ® 5? " + proceed(num4));
+		System.out.println("6 ГЅГІГ® 5? " + proceed(num6));
+		System.out.println("7 ГЅГІГ® 5? " + proceed(num7));
+		System.out.println("8 ГЅГІГ® 5? " + proceed(num8));
+		System.out.println("9 ГЅГІГ® 5? " + proceed(num9));
 		 
-		//Прогон по тестовой выборке
-		System.out.println("Узнал 5? " + proceed(num5));
-		System.out.println("Узнал 5 - 1? " + proceed(num51));
-		System.out.println("Узнал 5 - 2? " + proceed(num52));
-		System.out.println("Узнал 5 - 3? " + proceed(num53));
-		System.out.println("Узнал 5 - 4? " + proceed(num54));
-		System.out.println("Узнал 5 - 5? " + proceed(num55));
-		System.out.println("Узнал 5 - 6? " + proceed(num56));	
+		//РџСЂРѕРіРѕРЅ РїРѕ С‚РµСЃС‚РѕРІРѕР№ РІС‹Р±РѕСЂРєРµ
+		System.out.println("Г“Г§Г­Г Г« 5? " + proceed(num5));
+		System.out.println("Г“Г§Г­Г Г« 5 - 1? " + proceed(num51));
+		System.out.println("Г“Г§Г­Г Г« 5 - 2? " + proceed(num52));
+		System.out.println("Г“Г§Г­Г Г« 5 - 3? " + proceed(num53));
+		System.out.println("Г“Г§Г­Г Г« 5 - 4? " + proceed(num54));
+		System.out.println("Г“Г§Г­Г Г« 5 - 5? " + proceed(num55));
+		System.out.println("Г“Г§Г­Г Г« 5 - 6? " + proceed(num56));	
 	}
 	
 }
