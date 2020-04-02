@@ -1,6 +1,7 @@
 package org.home.neural.network;
 
 import java.util.Arrays;
+import java.util.stream.IntStream;
 
 import org.apache.commons.lang3.RandomUtils;
 
@@ -28,19 +29,20 @@ public class SearchingDigits {
 	
 	//Список всех вышеуказанных цифр
 	int[][] nums = {num0, num1, num2, num3, num4, num5, num6, num7, num8, num9};
-	
-	//Инициализация весов сети
-	//int[] weights = IntStream.range(0, 15).toArray();
-	int[] weights= {-7, -4, -6, -1, 4, -8, 0, 4, 0, -7, 10, 4, 8, 9, 6};
+
+	int[] weights;
 	
 	//Порог функции активации
 	int bias = 7;
 	
-	public SearchingDigits() {}
+	public SearchingDigits() {
+		//Инициализация весов сети
+		this.weights = IntStream.range(0, 15).toArray();
+	}
 
 	public static void main(String[] args) {
 		SearchingDigits searchingDigits = new SearchingDigits();
-		//searchingDigits.training();
+		searchingDigits.training();
 		searchingDigits.print();
 	}
 	
@@ -87,13 +89,13 @@ public class SearchingDigits {
 			
 			//Если получилось НЕ число 5
 			if (option != 5) {
-				//Если сеть выдала True/Да/1, то наказываем ее
+				//Если сеть выдала True/Да/1, на не правильное число, то наказываем ее
 				if(proceed(nums[option])) {
 					decrease(nums[option]);
 				}
 				//Если получилось число 5	
 			} else {
-				//Если сеть выдала False/Нет/0, то показываем, что эта цифра - то, что нам нужно
+				//Если сеть выдала False/Нет/0, на правильно число, то показываем, что эта цифра - то, что нам нужно
 				if(!proceed(num5)) {
 					increase(num5);
 				}
@@ -108,24 +110,24 @@ public class SearchingDigits {
 		System.out.println(Arrays.toString(weights));
 		 
 		//Прогон по обучающей выборке
-		System.out.println("0 ýòî 5? " + proceed(num0));
-		System.out.println("1 ýòî 5? " + proceed(num1));
-		System.out.println("2 ýòî 5? " + proceed(num2));
-		System.out.println("3 ýòî 5? " + proceed(num3));
-		System.out.println("4 ýòî 5? " + proceed(num4));
-		System.out.println("6 ýòî 5? " + proceed(num6));
-		System.out.println("7 ýòî 5? " + proceed(num7));
-		System.out.println("8 ýòî 5? " + proceed(num8));
-		System.out.println("9 ýòî 5? " + proceed(num9));
+		System.out.println("0 это 5? " + proceed(num0));
+		System.out.println("1 это 5? " + proceed(num1));
+		System.out.println("2 это 5? " + proceed(num2));
+		System.out.println("3 это 5? " + proceed(num3));
+		System.out.println("4 это 5? " + proceed(num4));
+		System.out.println("6 это 5? " + proceed(num6));
+		System.out.println("7 это 5? " + proceed(num7));
+		System.out.println("8 это 5? " + proceed(num8));
+		System.out.println("9 это 5? " + proceed(num9));
 		 
 		//Прогон по тестовой выборке
-		System.out.println("Óçíàë 5? " + proceed(num5));
-		System.out.println("Óçíàë 5 - 1? " + proceed(num51));
-		System.out.println("Óçíàë 5 - 2? " + proceed(num52));
-		System.out.println("Óçíàë 5 - 3? " + proceed(num53));
-		System.out.println("Óçíàë 5 - 4? " + proceed(num54));
-		System.out.println("Óçíàë 5 - 5? " + proceed(num55));
-		System.out.println("Óçíàë 5 - 6? " + proceed(num56));	
+		System.out.println("Узнал 5? " + proceed(num5));
+		System.out.println("Узнал 5 - 1? " + proceed(num51));
+		System.out.println("Узнал 5 - 2? " + proceed(num52));
+		System.out.println("Узнал 5 - 3? " + proceed(num53));
+		System.out.println("Узнал 5 - 4? " + proceed(num54));
+		System.out.println("Узнал 5 - 5? " + proceed(num55));
+		System.out.println("Узнал 5 - 6? " + proceed(num56));	
 	}
 	
 }
