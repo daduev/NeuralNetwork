@@ -51,7 +51,7 @@ public class SimpleTest01 {
 		double[] errors234 = new ArrayRealVector(fixWeight234).ebeMultiply(new ArrayRealVector(fnets234))
 				.ebeMultiply(new ArrayRealVector(fnets234).mapToSelf(ee)).toArray();
 		
-		System.out.println(new ArrayRealVector(inputs01).ebeMultiply(new ArrayRealVector(errors234)).toString());
+		//System.out.println(new ArrayRealVector(inputs01).ebeMultiply(new ArrayRealVector(errors234)).toString());
 		
 		System.out.println(error5);
 	}
